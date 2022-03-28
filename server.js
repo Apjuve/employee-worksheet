@@ -124,3 +124,32 @@ function addRole() {
         });
     });
 }
+
+//  Function to add a department.
+// Prompts user to name the new department.
+// Inserts the new department into the Departments table in the name category.
+
+
+function addDepartment() {
+    inquirer
+      .prompt([
+        {
+          name: "name",
+          type: "input",
+          message: "Which department would you like to add?",
+        },
+      ])
+      .then((res) => {
+        connection.query(
+          "INSERT INTO department SET ?",
+          {
+            name: res.name,
+          },
+          function (err) {
+            if (err) throw err;
+            console.table(res);
+            startPrompt();
+          }
+        );
+      });
+  }
