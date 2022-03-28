@@ -58,3 +58,32 @@ function startPrompt() {
         }
       });
   }
+
+  /* Function that allows the user to view all employees in the DB. 
+Joins the information from the Employees, Managers, Roles, and Departments table into one table.*/
+function viewAllEmployees() {
+    connection.query(queries.allEmp, (err, res) => {
+      if (err) throw err;
+      console.table(res);
+      startPrompt();
+    });
+  }
+  
+  // Function that allows the user to view all departments by selecting all data from the managers table and displaying it in the terminal.
+  function viewAllDepartments() {
+    connection.query(queries.allDept, (err, res) => {
+      if (err) throw err;
+      console.table(res);
+      startPrompt();
+    });
+  }
+  // Function for showing the roles and departments. Selects the Rold ID, Title, Salary, and Department ID from the role table and joins the information together with the corresponding department.
+  function viewAllRoles() {
+    connection.query(queries.allRoles, (err, table) => {
+      if (err) {
+        console.log(err);
+      }
+      console.table(table);
+      startPrompt();
+    });
+  }
