@@ -128,8 +128,6 @@ function addRole() {
 //  Function to add a department.
 // Prompts user to name the new department.
 // Inserts the new department into the Departments table in the name category.
-
-
 function addDepartment() {
     inquirer
       .prompt([
@@ -153,3 +151,16 @@ function addDepartment() {
         );
       });
   }
+
+
+  // Role queries. Creates an empty array for Roles. Selects all from Role table and loops through to return the list of roles and add any new roles.
+const roleArray = [];
+function selectRole() {
+  connection.query("SELECT * FROM role", function (err, res) {
+    if (err) throw err;
+    for (let i = 0; i < res.length; i++) {
+      roleArray.push(res[i].title);
+    }
+  });
+  return roleArray;
+}
