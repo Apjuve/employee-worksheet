@@ -59,8 +59,8 @@ function startPrompt() {
       });
   }
 
-  /* Function that allows the user to view all employees in the DB. 
-Joins the information from the Employees, Managers, Roles, and Departments table into one table.*/
+//    Function that allows the user to view all employees in the DB. 
+// Joins the information from the Employees, Managers, Roles, and Departments table into one table.*/
 function viewAllEmployees() {
     connection.query(queries.allEmp, (err, res) => {
       if (err) throw err;
@@ -87,3 +87,40 @@ function viewAllEmployees() {
       startPrompt();
     });
   }
+
+
+//   Function to add role.
+// Select title and salary from the role table, and prompts the user to select a new role and salary.
+// inserts the new title aand salary into the role table.
+
+function addRole() {
+    connection.query(queries.addRole, function (err, res) {
+        inquirer
+        .prompt([
+            {
+                name: 'title',
+                type: 'input',
+                message: 'What is the title of the new role?',
+            },
+            {
+                name: 'salary',
+                type: 'input',
+                message: 'What is the salary of the new role?',
+            },
+        ])
+        .then (function(res) {
+            connection.query(
+                'INSERT INTO role SET ?',
+                {
+                    title: res.title,
+                    salary: res.salary,
+                },
+                function(err) {
+                    if (err) throw err;
+                    console.table(res);
+                    startPrompt;
+                }
+            );
+        });
+    });
+}
