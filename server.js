@@ -164,3 +164,103 @@ function selectRole() {
   });
   return roleArray;
 }
+
+// Manager queries. Creates an empty array for Managers. Selects all from Managers table and loops through to return the list of roles and add any new Managers.
+const managersArray = [];
+function selectManager() {
+    connection.query(
+        'SELECT first_name, last_name FROM employee WHERE manager_id IS NULL',
+        function(err, res) {
+            if (err) throw err;
+            for (let i = 0; i < res.length; i++) {
+                managersArray.push(res[i].first_name);
+            }
+        }
+    );
+    return managersArray;
+}
+
+// Function for adding an employee.
+// This fires the inquirer npm and prompts the user to enter the first name, last name, role, manager. 
+// This is added to the DB and the selected role will have a salary attached based on the keys defined in the role table. 
+
+
+function addEmployee() {
+    inquirer
+    .prompt([
+        {
+        name: 'firstname',
+        type: 'input',
+        message: 'Enter thheir first name',
+        },
+        {
+            name: 'lastname',
+            type: 'input',
+            message: 'Enter their last name',
+        },
+        {
+            name: 'role',
+            type: 'list',
+            message: 'What is their role?',
+            choices: selectRole(),
+        },
+        {
+            name: 'choice', 
+            type: 'rawlist',
+            message: 'Whats thie manager name?',
+            choices: selectManager(),
+        },
+    ])
+    .then(function(val) {
+        let roleId = selectRole().indexOf(val.role) + 1;
+        let managerId = selectManager().indexOf(val.choice) + 1;
+        connection.query(
+            'INSERT INTO employee SET ?',
+            {
+                first_name: val.firstname,
+                last_name: val.lastname,
+                manager_id: managerId,
+                role_id: roleId,
+            },
+            function(err) {
+                if (err) throw err;
+                console.table(val);
+                startPrompt();
+            }
+        );
+    });
+}
+
+// Function for updating the role of an employee.
+// Selects the last anem and title of the employee to be updated from the employee table.
+// User selects the employee they want to update, zand then can update that employee's role.
+// The updated employee role is inserted into the employee table based on employee's last name.
+
+function updateEmployee() {
+    connection.query(queries.updateEmp, function (err,res) {
+        if (err) throw err;
+        console.log(res);
+        inquirer
+        .prompt([
+            {
+                name: 'lastName',
+                type: 'rawlist',
+                choices: function() {
+                    let lastName = [];
+                    for (let i = 0; i < res.length; i++) {
+                        lastName.push(res[i].last_name);
+                    }
+                    return lastName;
+                },
+                message: 'What is the Employee last name? ',
+            },
+            {
+                name: 'role',
+                tyoe: 'rawlist',
+                message: 'What is the employees new title?',
+                choices: selectRole(),
+            },
+        ])
+        
+    })
+}
