@@ -33,3 +33,6 @@ VALUES
 ('Malia', 'Obama', 6, 5), 
 ('Sarah', 'Lord', 7, NULL), 
 ('Tom', 'Ivey', 8, 7);
+
+
+DELETE FROM employee WHERE employee.last_name='';

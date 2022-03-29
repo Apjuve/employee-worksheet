@@ -17,5 +17,10 @@
   "bugs": {
     "url": "https://github.com/Apjuve/employee-worksheet/issues"
   },
-  "homepage": "https://github.com/Apjuve/employee-worksheet#readme"
+  "homepage": "https://github.com/Apjuve/employee-worksheet#readme",
+  "dependencies": {
+    "inquirer": "^8.2.2",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.3"
+  }
 }
