@@ -232,8 +232,8 @@ function addEmployee() {
 }
 
 // Function for updating the role of an employee.
-// Selects the last anem and title of the employee to be updated from the employee table.
-// User selects the employee they want to update, zand then can update that employee's role.
+// Selects the last name and title of the employee to be updated from the employee table.
+// User selects the employee they want to update, and then can update that employee's role.
 // The updated employee role is inserted into the employee table based on employee's last name.
 
 function updateEmployee() {
