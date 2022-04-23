@@ -26,6 +26,8 @@ The application uses the Inquirer npm to gather information from the user, and t
 
 
 ## Demo
+![Employee](https://user-images.githubusercontent.com/95586383/164948216-394704f6-dae5-4bed-bb03-548477bc1d4f.gif)
+
 
 ## Challenges
 
